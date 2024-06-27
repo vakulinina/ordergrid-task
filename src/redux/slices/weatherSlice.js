@@ -6,15 +6,17 @@ export const weatherSlice = createSlice({
   name: 'weather',
   initialState: {
     isCelsius: true,
+    city: undefined,
     current: undefined,
     forecast: undefined,
   },
   reducers: {
     fetchWeather: (state, action) => {
-      state.current = CURRENT_FORECAST?.find(
+      const currentWeather = CURRENT_FORECAST?.find(
         ({ city }) => city.toLowerCase() === action.payload.toLowerCase()
-      )?.currentWeather
-
+      )
+      state.current = currentWeather?.currentWeather
+      state.city = currentWeather?.city
       state.forecast = FIVE_DAYS_FORECAST?.find(
         ({ city }) => city.toLowerCase() === action.payload.toLowerCase()
       )?.forecast

@@ -1,27 +1,32 @@
 import './FiveDaysForecast.css'
 import { getTempByFahrenheit } from '../helpers'
+import { getImageByCondition } from '../images/config'
+
+const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export function FiveDaysForecast({ days, isCelsius }) {
-  const unit = isCelsius ? '°C' : '°F'
-
   return (
-    <div className="forecast">
+    <div>
       <p className="forecast-title">5-DAY FORECAST</p>
+      <div className="forecast-days">
+        {days.map(({ date, temperature: { min, max }, conditions }) => {
+          const weekDay = dayNames[new Date(date).getDay()]
+          const minTemp = isCelsius ? min : getTempByFahrenheit(min)
+          const maxTemp = isCelsius ? max : getTempByFahrenheit(max)
+          const image = getImageByCondition(conditions)
 
-      {days.map(({ date, temperature: { min, max }, conditions }) => {
-        const minTemp = isCelsius ? min : getTempByFahrenheit(min)
-        const maxTemp = isCelsius ? max : getTempByFahrenheit(max)
-
-        return (
-          <div className="forecast-day" key={date}>
-            <div>{date}</div>
-            <div className="forecast-day-conditions">
-              <span>{`L: ${minTemp} ${unit} | H: ${maxTemp} ${unit}`}</span>
-              <span style={{ alignSelf: 'flex-end' }}>{`${conditions}`}</span>
+          return (
+            <div className="forecast-day" key={date}>
+              <p className="week-day">{weekDay}</p>
+              <div className="forecast-temp">
+                <span>{`H: ${maxTemp}°`}</span>
+                <span>{`L: ${minTemp}°`}</span>
+              </div>
+              {image && <img className="forecast-image" src={image} alt="" />}
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
     </div>
   )
 }

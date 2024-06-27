@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { fetchWeather } from '../redux/slices/weatherSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleUnit } from '../redux/slices/weatherSlice.js'
+import './SearchInput.css'
 
 export function SearchInput() {
   const { isCelsius } = useSelector((state) => state.weather)
@@ -16,21 +16,17 @@ export function SearchInput() {
     dispatch(fetchWeather(input))
   }
 
-  const handleToggleUnit = () => {
-    dispatch(toggleUnit())
-  }
-
   return (
-    <div
-      style={{ display: 'flex', gap: '10px', justifyContent: 'space-between' }}
-    >
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <input value={input} onInput={handleInput} placeholder="Enter city" />
-        <button type="button" onClick={handleSubmit}>
-          Search
-        </button>
-      </div>
-      <button onClick={handleToggleUnit}>{isCelsius ? '°C' : '°F'}</button>
+    <div className="search-wrapper">
+      <input
+        value={input}
+        onInput={handleInput}
+        placeholder="Enter city"
+        className="search-input"
+      />
+      <button type="button" onClick={handleSubmit} className="search-button">
+        Search
+      </button>
     </div>
   )
 }
