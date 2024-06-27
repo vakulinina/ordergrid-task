@@ -1,40 +1,19 @@
 import './App.css'
 import { SearchInput } from './components/SearchInput.js'
-import { CURRENT_FORECAST } from './constants/current_forecast.js'
-import { FIVE_DAYS_FORECAST } from './constants/five_days_forecast.js'
-import { useState, useCallback } from 'react'
-import { FiveDaysForecast } from './components/FiveDaysForecast.js'
 import { CurrentWeather } from './components/CurrentWeather.js'
+import { FiveDaysForecast } from './components/FiveDaysForecast.js'
+import { useSelector } from 'react-redux'
 
 function App() {
-  const [currentWeather, setCurrentWeather] = useState()
-  const [fiveDaysForecast, setFiveDaysForecast] = useState()
-
-  const handleSearch = useCallback(
-    (input) => {
-      if (!input) return
-
-      setCurrentWeather(
-        CURRENT_FORECAST?.find(
-          ({ city }) => city.toLowerCase() === input.toLowerCase()
-        )?.currentWeather
-      )
-      setFiveDaysForecast(
-        FIVE_DAYS_FORECAST?.find(
-          ({ city }) => city.toLowerCase() === input.toLowerCase()
-        )?.forecast
-      )
-    },
-    [setCurrentWeather, setFiveDaysForecast]
-  )
+  const { current, forecast, isCelsius } = useSelector((state) => state.weather)
 
   return (
     <main className="App">
-      <SearchInput onSubmit={handleSearch} />
-      {currentWeather && fiveDaysForecast ? (
+      <SearchInput />
+      {current && forecast ? (
         <>
-          <CurrentWeather weather={currentWeather} />
-          <FiveDaysForecast days={fiveDaysForecast} />
+          <CurrentWeather weather={current} isCelsius={isCelsius} />
+          <FiveDaysForecast days={forecast} isCelsius={isCelsius} />
         </>
       ) : (
         <div>No forecast was found for your request</div>

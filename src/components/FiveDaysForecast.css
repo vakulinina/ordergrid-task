@@ -1,15 +1,21 @@
 .forecast {
-    border: 1px solid black;
+    box-shadow: 5px 5px 10px lightgray;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
+.forecast-title {
+    font-weight: 700;
+    color: gray;
+}
+
 .forecast-day {
     display: flex;
     gap: 10px;
+    justify-content: space-between;
 }
 
 .forecast-day-conditions {

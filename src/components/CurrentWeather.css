@@ -1,5 +1,12 @@
-.Current-weather {
-    border: 1px solid black;
+.current-weather {
+    display: flex;
+    box-shadow: 5px 5px 10px grey;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.temperature {
+    font-size: 24px;
+    margin: 5px 0;
 }
